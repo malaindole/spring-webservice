@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+					xmlns:tns="http://mathservice.cxf.codereq.com/" 
+					xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+					xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="UserService" 
+					targetNamespace="http://mathservice.cxf.codereq.com/">
+	<wsdl:types>
+	  <xsd:schema targetNamespace="http://mathservice.cxf.codereq.com/">
+	    <xsd:element name="AddNumberRequest">
+	      <xsd:complexType>
+	        <xsd:sequence>
+	          <xsd:element name="number1" type="xsd:int"/>
+	          <xsd:element name="number2" type="xsd:int"/>
+	        </xsd:sequence>
+	      </xsd:complexType>
+	    </xsd:element>
+	    <xsd:element name="AddNumberResponse">
+	      <xsd:complexType>
+	        <xsd:sequence>
+	          <xsd:element name="code" type="xsd:string"/>
+	          <xsd:element name="result" type="xsd:int"/>
+	        </xsd:sequence>
+	      </xsd:complexType>
+	    </xsd:element>
+	  </xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="AddNumberRequest">
+	  <wsdl:part element="tns:AddNumberRequest" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="AddNumberResponse">
+	  <wsdl:part element="tns:AddNumberResponse" name="parameters"/>
+	</wsdl:message>
+	<wsdl:portType name="MathServicePortType">
+	  <wsdl:operation name="Add">
+	    <wsdl:input message="tns:AddNumberRequest"/>
+	    <wsdl:output message="tns:AddNumberResponse"/>
+	  </wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="MathServiceSOAP" type="tns:MathServicePortType">
+	  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+	  <wsdl:operation name="Add">
+	    <soap:operation soapAction="http://MathModule.cxf.codereq.com/AddNumber"/>
+	    <wsdl:input>
+	      <soap:body use="literal"/>
+	    </wsdl:input>
+	    <wsdl:output>
+	      <soap:body use="literal"/>
+	    </wsdl:output>
+	  </wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="MathService">
+	  <wsdl:port binding="tns:MathServiceSOAP" name="MathServiceSOAP">
+	    <soap:address location="http://localhost:8080/mathservice"/>
+	  </wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
